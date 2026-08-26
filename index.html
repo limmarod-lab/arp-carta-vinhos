@@ -134,7 +134,7 @@ async function api(path, options={}){
   return body;
 }
 function updateSessionUI(){
-  const r=currentRole();
+  const r=CURRENT_ROLE;
   const chip=document.getElementById('sessionChip'),logout=document.getElementById('logoutBtn'),admin=document.getElementById('adminBtn');
   if(CURRENT_USER){
     chip.textContent=(r==='admin'?'Administrador':'Colaborador')+' · '+CURRENT_USER;
