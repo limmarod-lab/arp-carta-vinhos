@@ -13,7 +13,7 @@ async function verifyToken(token,env){try{const [body,sig]=token.split('.');if(!
 async function auth(request,env,roles=[]){const h=request.headers.get('Authorization')||'';const token=h.startsWith('Bearer ')?h.slice(7):'';const p=await verifyToken(token,env);if(!p|| (roles.length&&!roles.includes(p.role)))return null;return p}
 async function binFetch(env,id,method='GET',body){
   if(!id||id==='COLOQUE_SEU_BIN_ID')throw new Error('Configure os BIN_IDs no Worker.');
-  const r=await fetch(`${JSONBIN_ROOT}/${id}${method==='GET'?'/latest':''}`,{method,headers:{'Content-Type':'application/json','X-Master-Key':env.JSONBIN_MASTER_KEY,'X-Bin-Versioning':'true'},body:body?JSON.stringify(body):undefined});
+  const r=await fetch(`${JSONBIN_ROOT}/${id}${method==='GET'?'/latest':''}`,{method,headers:{'Content-Type':'application/json','X-Master-Key':env.JSONBIN_MASTER_KEY,'X-Bin-Versioning':'false'},body:body?JSON.stringify(body):undefined});
   const text=await r.text();let data;try{data=JSON.parse(text)}catch{data={message:text}};if(!r.ok)throw new Error(data.message||`JSONBin ${r.status}`);return data.record??data;
 }
 async function getWines(env){const r=await binFetch(env,env.WINES_BIN_ID);return Array.isArray(r?.wines)?r:{version:1,wines:[]}}
