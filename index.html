@@ -505,7 +505,6 @@ async function pushJsonbin(){
 function openAuth(which='admin'){
   authRole=which||'admin';
   openSheet(`<div class="login"><div class="eyebrow">Acesso restrito</div><h2>Entrar no Admin</h2>
-    <p>Usuário e senha ficam no Cloudflare, como na V5. Não aparecem no F12.</p>
     <div class="field"><label>Usuário</label><input id="au" autocomplete="username"></div>
     <div class="field"><label>Senha</label><input id="ap" type="password" autocomplete="current-password"></div>
     <div class="error" id="ae"></div>
