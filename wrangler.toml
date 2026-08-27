@@ -1,0 +1,9 @@
+name = "arp-carta-vinhos-api"
+compatibility_date = "2026-08-26"
+
+[vars]
+# IDs não são secretos; a chave do JSONBin e as credenciais ficam em Secrets.
+WINE_BIN_NOTE = "Configure WINES_BIN_ID e USERS_BIN_ID como vars no painel Cloudflare."
+
+[secrets]
+required = ["JSONBIN_MASTER_KEY", "SESSION_SECRET", "ADMIN_USER", "ADMIN_PASSWORD", "COLAB_USER", "COLAB_PASSWORD", "WINES_BIN_ID", "USERS_BIN_ID"]
