@@ -42,13 +42,13 @@
 </style>
 </head>
 <body>
-<header class="top"><div class="topin"><div class="brand"><div class="mark">a<br>r<br>p</div><div><b>Arp Bar · Arpoador</b><span>Estudo · Carta de Vinhos</span></div></div><nav class="nav"><button class="active" data-view="catalog">🍷 Carta</button><button data-view="finder">✦ Encontrar</button><button data-view="training">🎓 Treinamento</button><button id="adminNav">🔒 Acesso Restrito</button></nav></div></header>
+<header class="top"><div class="topin"><div class="brand"><div class="mark">a<br>r<br>p</div><div><b>Arp Bar · Arpoador</b><span>Carta de Vinhos</span></div></div><nav class="nav"><button class="active" data-view="catalog">🍷 Carta</button><button data-view="finder">✦ Encontrar</button><button data-view="training">🎓 Treinamento</button><button id="adminNav">⚙ Admin</button></nav></div></header>
 <main id="catalog" class="wrap">
 <section class="hero"><div class="hero-grid"><div class="hero-main"><h1>O vinho certo,<br>para o momento certo.</h1><p>Uma carta feita para o salão: encontre por uva, estilo, prato ou preço — e tenha uma sugestão de venda pronta em segundos.</p><div class="hero-actions"><button onclick="openFinder()">✦ Encontrar meu vinho</button><button onclick="openTraining()">🎓 Treinar equipe</button></div></div><div class="hero-side"><div class="eyebrow">Hoje na carta</div><h3>Visão rápida</h3><div class="statline"><span>Rótulos</span><strong id="heroCount">—</strong></div><div class="statline"><span>Países</span><strong id="heroCountries">—</strong></div><div class="statline"><span>Uvas</span><strong id="heroGrapes">—</strong></div><div class="statline"><span>Status</span><strong id="syncStatus">Local</strong></div></div></div></section>
 <section class="section"><div class="section-head"><div><h2>Encontre rápido</h2><small>Busque por nome, uva, região, prato ou perfil.</small></div></div><div class="searchbox"><input id="search" placeholder="Ex.: Sauvignon Blanc, ostras, leve, Chile..." autocomplete="off"><button class="clear hidden" id="clearSearch">×</button></div></section>
 <section class="section"><div class="section-head"><h2>Categorias</h2><small id="categoryHint">37 rótulos</small></div><div class="catgrid" id="cats"></div></section>
 <section class="section"><div class="controls"><select id="grapeFilter"><option value="">Todas as uvas</option></select><select id="countryFilter"><option value="">Todos os países</option></select><select id="styleFilter"><option value="">Todos os perfis</option><option>Leve</option><option>Fresco</option><option>Aromático</option><option>Médio corpo</option><option>Encorpado</option><option>Seco</option><option>Doce</option><option>Natural</option></select><select id="priceFilter"><option value="">Qualquer preço</option><option value="170">Até R$ 170</option><option value="200">Até R$ 200</option><option value="250">Até R$ 250</option><option value="99999">Qualquer preço</option></select><button id="favFilter">☆ Favoritos</button></div><div class="toolbar-note"><span id="count">0 vinhos</span><span id="status">Carregando carta…</span></div><div class="grid" id="list"></div></section>
-<footer class="footer">Arp Bar · Arpoador<br><span>ARP Carta de Vinhos · Desenvolvido por Rodrigo</span></footer>
+<footer class="footer">Arp Bar · Arpoador · Onde o Rio encontra o mar<br><span>ARP Carta de Vinhos · Desenvolvido por Rodrigo</span></footer>
 </main>
 <div id="adminView" class="wrap hidden"></div>
 <div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
@@ -505,6 +505,7 @@ async function pushJsonbin(){
 function openAuth(which='admin'){
   authRole=which||'admin';
   openSheet(`<div class="login"><div class="eyebrow">Acesso restrito</div><h2>Entrar no Admin</h2>
+    <p>Usuário e senha ficam no Cloudflare, como na V5. Não aparecem no F12.</p>
     <div class="field"><label>Usuário</label><input id="au" autocomplete="username"></div>
     <div class="field"><label>Senha</label><input id="ap" type="password" autocomplete="current-password"></div>
     <div class="error" id="ae"></div>
@@ -574,7 +575,9 @@ function renderAdmin(){
       <div class="actions">
         <button type="button" onclick="closeAdmin()">← Carta</button>
         <button class="primary" type="button" id="saveAllBtn">Salvar alterações</button>
-        <button type="button" onclick="exportData()">Exportar JSON</button>
+        <button type="button" onclick="exportData()">Exportar carta</button>
+        <button type="button" onclick="document.getElementById('importCartaFile').click()">Importar carta</button>
+        <input id="importCartaFile" type="file" accept="application/json,.json" hidden>
         ${user?`<button type="button" onclick="logout();renderAdmin()">Sair</button>`:''}
       </div>
     </div>
@@ -627,6 +630,7 @@ function renderAdmin(){
   drawCatChips();
   adminList();
   if($('saveAllBtn'))$('saveAllBtn').onclick=publishAll;
+  bindImportCarta();
   $('addCatBtn').onclick=addCategory;
   $('saveWineBtn').onclick=saveWine;
   $('clearFormBtn').onclick=clearForm;
@@ -763,9 +767,43 @@ function exportData(){
   const blob=new Blob([JSON.stringify({version:6,wines:WINES,categories:CUSTOM,catMeta:CATMETA,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='arp-carta-vinhos-v6-backup.json';
+  a.download='carta-vinhos-backup.json';
   a.click();
   URL.revokeObjectURL(a.href);
+}
+function bindImportCarta(){
+  const inp=$('importCartaFile');
+  if(!inp||inp.dataset.bound)return;
+  inp.dataset.bound='1';
+  inp.addEventListener('change',()=>{
+    const f=inp.files&&inp.files[0];
+    inp.value='';
+    if(!f)return;
+    const reader=new FileReader();
+    reader.onerror=()=>alert('Não deu para ler o arquivo.');
+    reader.onload=()=>{
+      try{importCarta(JSON.parse(reader.result))}
+      catch(e){alert('JSON inválido. '+e.message)}
+    };
+    reader.readAsText(f);
+  });
+}
+async function importCarta(raw){
+  const rec=normalizeRecord(raw);
+  if(!rec||!Array.isArray(rec.wines))return alert('Este arquivo não é uma carta. Precisa ter a lista “wines”.');
+  const n=rec.wines.length;
+  if(!confirm((n?`Isso substitui a carta atual por ${n} vinho(s) do arquivo.`:'Isso esvazia a carta.')+' Continuar?'))return;
+  WINES=rec.wines;
+  CUSTOM=Array.isArray(rec.categories)?rec.categories.map(x=>typeof x==='string'?x:(x&&x.name)||'').filter(Boolean):[...new Set(WINES.map(w=>w.cat).filter(c=>c&&!BASE_ORDER.includes(c)))];
+  CATMETA=rec.catMeta&&typeof rec.catMeta==='object'?rec.catMeta:{};
+  UPDATED_AT=rec.updatedAt||new Date().toISOString();
+  saveLocal();
+  populate();buildCats();render();
+  if($('adminView')&&!$('adminView').classList.contains('hidden'))renderAdmin();
+  try{
+    const ok=await persistWinesCloud();
+    alert(ok?'Carta importada e publicada para a equipe. Peça um refresh nos outros aparelhos.':'Carta importada só neste aparelho. Entre no Admin e clique em Salvar alterações para publicar.');
+  }catch(e){alert('Importou aqui, mas não publicou: '+e.message)}
 }
 function switchView(v){
   if(v==='catalog')closeAdmin();
