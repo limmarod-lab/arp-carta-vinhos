@@ -569,21 +569,6 @@ function renderAdmin(){
     </div>
     <p class="modehint" id="publishHint"></p>
     <div class="admin-grid">
-      <div class="admin-card full">
-        <h3>Publicar para todos</h3>
-        <p class="modehint">Cole um token do GitHub com permissão de gravar neste repositório. Só no seu aparelho. A equipe não precisa do token — ela só abre o site.</p>
-        <div class="formgrid">
-          <div class="field"><label>Dono (user/org)</label><input id="ghOwner"></div>
-          <div class="field"><label>Repositório</label><input id="ghRepo"></div>
-          <div class="field"><label>Branch</label><input id="ghBranch" placeholder="main"></div>
-          <div class="field"><label>Arquivo</label><input id="ghPath" placeholder="data/wines-seed.json"></div>
-          <div class="field full"><label>Token</label><input id="ghToken" type="password" autocomplete="off" placeholder="ghp_..."></div>
-          <div class="field full">
-            <button class="primary pill" type="button" id="saveGhBtn">Salvar conexão</button>
-            <button class="pill" type="button" id="publishNowBtn">Publicar agora</button>
-          </div>
-        </div>
-      </div>
       <div class="admin-card">
         <h3>Categorias e eventos</h3>
         <p class="modehint">Crie uma categoria para carta especial (jantar, Réveillon, harmonização). Depois associe os vinhos a ela. Pratos entram no campo do vinho e, no futuro, como cardápio próprio.</p>
