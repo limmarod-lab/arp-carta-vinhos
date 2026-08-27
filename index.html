@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#182f43"><meta name="description" content="ARP Bar · Carta de Vinhos — consulta, harmonização e treinamento da equipe">
+<title>ARP · Carta de Vinhos V6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{--navy:#182f43;--navy2:#244b66;--copper:#b66a43;--sand:#e7d8c1;--cream:#f6f0e7;--paper:#fcfaf6;--ink:#1d2933;--muted:#68727a;--white:#fff;--line:#e8dfd2;--green:#3f7868;--red:#a84b40;--gold:#b98a42;--shadow:0 16px 45px rgba(24,47,67,.10);--r:20px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#f3eadc 0,#f8f4ec 35%,#f3eadc 100%);color:var(--ink);font-family:"DM Sans",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}.wrap{max-width:1120px;margin:auto;padding:0 18px}
+.top{position:sticky;top:0;z-index:50;background:rgba(252,250,246,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.topin{min-height:74px;display:flex;align-items:center;gap:16px;max-width:1120px;margin:auto;padding:10px 18px}.brand{display:flex;align-items:center;gap:11px;min-width:190px}.mark{width:42px;height:42px;border-radius:50%;background:var(--navy);color:#f8f0e5;display:grid;place-items:center;font:600 12px/10px "Playfair Display";letter-spacing:.08em}.brand b{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--navy)}.brand span{font:500 19px "Playfair Display";display:block}.nav{display:flex;gap:7px;margin-left:auto;overflow:auto}.nav button,.pill{border:1px solid var(--line);background:var(--white);color:var(--navy);padding:9px 12px;border-radius:999px;font-weight:700;font-size:12px;white-space:nowrap}.nav button.active,.primary{background:var(--navy);border-color:var(--navy);color:#fff}.copper{background:var(--copper)!important;border-color:var(--copper)!important;color:#fff!important}
+.hero{padding:42px 0 24px}.hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:20px;align-items:stretch}.hero-main{background:linear-gradient(135deg,var(--navy),#244b66 65%,#315b73);border-radius:28px;padding:34px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow)}.hero-main:after{content:"";position:absolute;width:240px;height:240px;border:1px solid rgba(255,255,255,.14);border-radius:50%;right:-70px;bottom:-100px}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.72;font-weight:700}.hero h1{font:500 clamp(34px,6vw,58px)/1.02 "Playfair Display";margin:12px 0}.hero p{max-width:610px;color:rgba(255,255,255,.78);line-height:1.6;margin:0 0 22px}.hero-actions{display:flex;gap:8px;flex-wrap:wrap}.hero-actions button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.10);color:#fff;border-radius:999px;padding:11px 14px;font-weight:700}.hero-side{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:25px;box-shadow:0 8px 30px rgba(24,47,67,.06)}.hero-side h3{font:500 24px "Playfair Display";margin:5px 0 15px}.statline{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line);font-size:13px}.statline:last-child{border:0}.statline strong{color:var(--navy)}
+.section{padding:14px 0 8px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:16px 0 12px}.section-head h2{font:500 27px "Playfair Display";margin:0;color:var(--navy)}.section-head small{color:var(--muted)}
+.searchbox{display:flex;gap:8px;position:relative}.searchbox input{width:100%;padding:14px 44px 14px 16px;border:1px solid var(--line);border-radius:15px;background:var(--paper);outline:none;box-shadow:0 5px 20px rgba(24,47,67,.04)}.searchbox input:focus{border-color:#9db0bd;box-shadow:0 0 0 4px rgba(36,75,102,.08)}.clear{position:absolute;right:8px;top:7px;border:0;background:transparent;font-size:20px;color:var(--muted)}
+.catgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.cat{border:1px solid var(--line);background:var(--paper);border-radius:16px;padding:14px 8px;text-align:center;min-height:78px;transition:.15s}.cat:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.cat .ico{font-size:22px;display:block;margin-bottom:5px}.cat b{font-size:11px;color:var(--navy)}.cat small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.controls select,.controls button{padding:10px 12px;border:1px solid var(--line);background:var(--paper);border-radius:12px;color:var(--navy);font-weight:600;font-size:12px}.controls button.active{background:var(--navy);color:#fff}
+.toolbar-note{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;margin:10px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 5px 18px rgba(24,47,67,.045);transition:.16s}.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.cardtop{display:flex;gap:13px;padding:14px}.thumb{width:76px;height:104px;object-fit:contain;background:#f0e8db;border-radius:11px;flex:none}.wineinfo{min-width:0;flex:1}.badge{display:inline-flex;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--navy);background:#edf2f4;padding:4px 7px;border-radius:999px}.wineinfo h3{font:500 19px/1.15 "Playfair Display";margin:8px 0 4px;color:var(--ink)}.meta{font-size:11px;color:var(--muted);line-height:1.45}.price{font-size:13px;font-weight:800;color:var(--navy);margin-top:8px}.cardfoot{border-top:1px solid var(--line);padding:9px 12px;display:flex;align-items:center;gap:7px}.tag{background:#f2eadf;border-radius:999px;padding:4px 7px;font-size:9px;color:#6d5d4c;font-weight:700}.cardfoot button{margin-left:auto;border:0;background:transparent;font-size:20px;color:#b8a98e}.cardfoot button.on{color:var(--gold)}
+.empty{padding:35px;text-align:center;background:var(--paper);border:1px dashed var(--line);border-radius:18px;color:var(--muted);grid-column:1/-1}.footer{padding:45px 0 60px;color:var(--muted);font-size:11px;text-align:center}
+.overlay{position:fixed;inset:0;background:rgba(12,27,38,.55);z-index:100;display:none;align-items:flex-end;justify-content:center;padding:12px;backdrop-filter:blur(5px)}.overlay.open{display:flex}.sheet{width:min(900px,100%);max-height:94vh;overflow:auto;background:var(--paper);border-radius:26px;box-shadow:0 25px 80px rgba(0,0,0,.28);position:relative}.close{position:absolute;right:12px;top:10px;border:0;background:#fff;border:1px solid var(--line);width:36px;height:36px;border-radius:50%;font-size:23px;color:var(--navy);z-index:2}.sheethead{padding:28px 26px 18px;border-bottom:1px solid var(--line)}.sheetbody{padding:22px 26px 30px}.detail{display:grid;grid-template-columns:180px 1fr;gap:24px}.detail img{width:170px;height:230px;object-fit:contain;background:#f1e9dc;border-radius:16px}.detail h2{font:500 36px/1.05 "Playfair Display";margin:7px 0;color:var(--navy)}.detail .grape{font-weight:700;font-size:13px}.detail .region{color:var(--muted);margin-top:4px}.detail .bigprice{font-size:22px;font-weight:800;color:var(--copper);margin:13px 0}.profile{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.profile span{padding:6px 9px;border-radius:999px;background:#edf2f4;color:var(--navy);font-size:10px;font-weight:800}.detailgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.spec{border:1px solid var(--line);border-radius:15px;padding:13px;background:#fffdf9}.spec b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--copper);margin-bottom:6px}.spec p{font-size:13px;line-height:1.55;margin:0}.pitch{margin-top:10px;background:#f0e7da;border-left:4px solid var(--copper);padding:14px;border-radius:0 14px 14px 0;font-size:13px;line-height:1.55}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.actions button{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 13px;font-weight:700;color:var(--navy)}
+.finder{padding:24px}.finder h2{font:500 32px "Playfair Display";margin:0 0 5px;color:var(--navy)}.finder p{color:var(--muted);font-size:13px}.finder-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}.finder label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}.finder select,.finder input{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;outline:none}.result{border:1px solid var(--line);border-radius:17px;padding:13px;margin-top:10px;background:#fff}.resultline{display:flex;gap:12px;align-items:center}.result img{width:55px;height:75px;object-fit:contain}.result h3{font:500 20px "Playfair Display";margin:0}.scorebar{height:6px;background:#e9e2d7;border-radius:10px;overflow:hidden;margin-top:8px}.scorebar i{display:block;height:100%;background:var(--copper)}
+.training-tabs{display:flex;gap:7px;overflow:auto;margin-bottom:16px}.training-tabs button{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:999px;font-size:11px;font-weight:800;color:var(--navy)}.training-tabs button.active{background:var(--navy);color:#fff}.quizq{font-size:17px;line-height:1.5;margin:10px 0 15px}.answers{display:grid;gap:8px}.answers button{text-align:left;border:1px solid var(--line);background:#fff;padding:13px;border-radius:13px;color:var(--ink)}.answers button.correct{background:#e7f1eb;border-color:#8ab39e}.answers button.wrong{background:#f7e8e5;border-color:#d39a91}.feedback{padding:12px;border-radius:13px;background:#f1eadf;color:var(--navy);font-size:12px;line-height:1.5;margin-top:12px}.score{font-size:12px;color:var(--muted);margin-top:14px}.admin{padding:24px}.admin h2{font:500 32px "Playfair Display";margin:0;color:var(--navy)}.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.admin-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px}.admin-card.full{grid-column:1/-1}.admin-card h3{margin:0 0 12px;font:600 17px "Playfair Display"}.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.field label{display:block;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;margin-bottom:4px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff;outline:none}.field textarea{min-height:75px;resize:vertical}.field.full{grid-column:1/-1}.adminrow{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}.adminrow img{width:36px;height:48px;object-fit:contain}.grow{flex:1;min-width:0}.grow strong{display:block;font-size:12px}.grow small{color:var(--muted);font-size:10px}.adminrow button{padding:7px 9px;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:10px;font-weight:700}.login{max-width:420px;margin:auto;padding:26px}.login h2{font:500 30px "Playfair Display";color:var(--navy);margin:0 0 5px}.login p{font-size:12px;color:var(--muted)}.role{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:15px 0}.role button{border:1px solid var(--line);background:#fff;padding:10px;border-radius:10px;font-weight:700}.role button.active{background:var(--navy);color:#fff}.login .field{margin:9px 0}.login .btnfull{width:100%;padding:12px;border:0;border-radius:11px;font-weight:800;background:var(--navy);color:#fff}.error{color:var(--red);font-size:11px;min-height:17px}
+@media(max-width:900px){.catgrid{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.hero-grid{grid-template-columns:1fr}.hero-side{display:none}.nav{max-width:48vw}}
+@media(max-width:600px){.topin{min-height:64px}.brand{min-width:auto}.brand b{font-size:9px}.brand span{font-size:16px}.nav button{padding:8px 10px;font-size:10px}.wrap{padding:0 12px}.hero{padding-top:22px}.hero-main{padding:25px;border-radius:22px}.hero h1{font-size:38px}.catgrid{grid-template-columns:repeat(4,1fr);gap:6px}.cat{padding:10px 4px;min-height:72px}.grid{grid-template-columns:1fr}.cardtop{padding:12px}.detail{grid-template-columns:100px 1fr;gap:15px}.detail img{width:100px;height:145px}.detail h2{font-size:25px}.detailgrid,.finder-grid,.admin-grid,.formgrid{grid-template-columns:1fr}.admin-card.full,.field.full{grid-column:auto}.sheetbody,.sheethead,.finder,.admin{padding:18px}.overlay{padding:0}.sheet{max-height:96vh;border-radius:24px 24px 0 0}}
+
+.cat.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cat.active small{color:#d7c4a8}
+.cat .evt{display:block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--copper);margin-top:3px;font-weight:700}
+.cat.active .evt{color:#f0d2b8}
+.imgprev{display:flex;gap:12px;align-items:center;margin-top:8px}
+.imgprev img{width:54px;height:78px;object-fit:cover;border-radius:8px;background:#eee;border:1px solid var(--line)}
+.imgprev small{color:var(--muted);font-size:11px;line-height:1.35}
+.catmgr{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.catmgr input,.catmgr select{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff}
+.chiprow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.chip button{border:0;background:transparent;color:var(--red);padding:0;font-size:14px}
+.answers button{white-space:normal;text-align:left;line-height:1.35}
+.modehint{font-size:11px;color:var(--muted);margin:0 0 12px}
+
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><div class="brand"><div class="mark">a<br>r<br>p</div><div><b>Arp Bar · Arpoador</b><span>Carta de Vinhos</span></div></div><nav class="nav"><button class="active" data-view="catalog">🍷 Carta</button><button data-view="finder">✦ Encontrar</button><button data-view="training">🎓 Treinamento</button><button id="adminNav">⚙ Admin</button></nav></div></header>
+<main id="catalog" class="wrap">
+<section class="hero"><div class="hero-grid"><div class="hero-main"><h1>O vinho certo,<br>para o momento certo.</h1><p>Uma carta feita para o salão: encontre por uva, estilo, prato ou preço — e tenha uma sugestão de venda pronta em segundos.</p><div class="hero-actions"><button onclick="openFinder()">✦ Encontrar meu vinho</button><button onclick="openTraining()">🎓 Treinar equipe</button></div></div><div class="hero-side"><div class="eyebrow">Hoje na carta</div><h3>Visão rápida</h3><div class="statline"><span>Rótulos</span><strong id="heroCount">—</strong></div><div class="statline"><span>Países</span><strong id="heroCountries">—</strong></div><div class="statline"><span>Uvas</span><strong id="heroGrapes">—</strong></div><div class="statline"><span>Status</span><strong id="syncStatus">Local</strong></div></div></div></section>
+<section class="section"><div class="section-head"><div><h2>Encontre rápido</h2><small>Busque por nome, uva, região, prato ou perfil.</small></div></div><div class="searchbox"><input id="search" placeholder="Ex.: Sauvignon Blanc, ostras, leve, Chile..." autocomplete="off"><button class="clear hidden" id="clearSearch">×</button></div></section>
+<section class="section"><div class="section-head"><h2>Categorias</h2><small id="categoryHint">37 rótulos</small></div><div class="catgrid" id="cats"></div></section>
+<section class="section"><div class="controls"><select id="grapeFilter"><option value="">Todas as uvas</option></select><select id="countryFilter"><option value="">Todos os países</option></select><select id="styleFilter"><option value="">Todos os perfis</option><option>Leve</option><option>Fresco</option><option>Aromático</option><option>Médio corpo</option><option>Encorpado</option><option>Seco</option><option>Doce</option><option>Natural</option></select><select id="priceFilter"><option value="">Qualquer preço</option><option value="170">Até R$ 170</option><option value="200">Até R$ 200</option><option value="250">Até R$ 250</option><option value="99999">Qualquer preço</option></select><button id="favFilter">☆ Favoritos</button></div><div class="toolbar-note"><span id="count">0 vinhos</span><span id="status">Carregando carta…</span></div><div class="grid" id="list"></div></section>
+<footer class="footer">Arp Bar · Arpoador · Onde o Rio encontra o mar<br><span>ARP Carta de Vinhos V6 · Desenvolvido por Rodrigo</span></footer>
+</main>
+<div id="adminView" class="wrap hidden"></div>
+<div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
+
+<script>
+const SEED=[{"id": 1, "cat": "Taça", "name": "Gazzaro Brut", "grapes": "Chardonnay", "region": "Flores da Cunha · RS · Brasil", "price": "R$ 35", "img": "gazzaro-brut.jpg", "visual": "Amarelo-palha, limpo, borbulhas finas e persistentes.", "nose": "Frutas cítricas, maçã verde, notas de pão fresco.", "mouth": "Fresco, seco, boa acidez, final limpo.", "pitch": "Taça de abertura. Ofereça com ostras, ceviche ou plateau. Leve, limpo e sem complicação.", "harmoniza": "Ostras · Ceviche Arp · Plateau de frutos do mar · Trio de ostras"}, {"id": 2, "cat": "Taça", "name": "Arp Chardonnay", "grapes": "Chardonnay", "region": "RS · Brasil", "price": "R$ 35", "img": "arp-chardonnay.jpg", "visual": "Amarelo-palha, límpido.", "nose": "Maçã, pera, toque cítrico.", "mouth": "Leve, fresco, boa acidez, final curto e limpo.", "pitch": "Chardonnay de entrada da casa. Seguro com ceviche, tartar e saladas. Bom para quem pede branco sem firula.", "harmoniza": "Ceviche Arp · Duo de tartar · Salada da horta · Peito de frango"}, {"id": 3, "cat": "Taça", "name": "Cumbres de Tagua Sauvignon Blanc", "grapes": "Sauvignon Blanc", "region": "Vale do Rapel · Chile", "price": "R$ 35", "img": "cumbres-sauvignon-blanc.jpg", "visual": "Verdeal a amarelo-palha, muito transparente.", "nose": "Maracujá, grama cortada, cítricos.", "mouth": "Ácido, vivo, seco, final refrescante.", "pitch": "Sauvignon clássico. Ideal com ostras, ceviche e moules-frites. Acidez que limpa o paladar.", "harmoniza": "Ostras · Ceviche Arp · Moules-frites · Salada mediterrânea"}, {"id": 4, "cat": "Taça", "name": "Arp Tempranillo", "grapes": "Tempranillo", "region": "Serra do Sudeste · RS · Brasil", "price": "R$ 35", "img": "arp-tempranillo.jpg", "visual": "Vermelho-rubi, intensidade média.", "nose": "Frutas vermelhas, cereja, toque especiado.", "mouth": "Médio corpo, taninos macios, boa acidez.", "pitch": "Tinto de taça versátil. Vai bem com burger, steak tartar e empanada de carne. Fácil de beber.", "harmoniza": "Empanada de carne · Steak tartar · Arp burger · Peito de frango"}, {"id": 5, "cat": "Taça", "name": "Cumbres de Tagua Syrah", "grapes": "Syrah", "region": "Vale do Rapel · Chile", "price": "R$ 35", "img": "cumbres-syrah.jpg", "visual": "Vermelho-púrpura a rubi, boa intensidade.", "nose": "Amora, pimenta-do-reino, toque defumado.", "mouth": "Médio corpo, taninos presentes, final especiado.", "pitch": "Syrah de taça com personalidade. Combina com filé au poivre, chorizo e steak tartar.", "harmoniza": "Steak tartar · Filé au poivre · Bife de chorizo · Empanada de carne"}, {"id": 6, "cat": "Taça", "name": "Taça Premium", "grapes": "Rótulo sazonal", "region": "Escolhido pelo sommelier", "price": "R$ 42", "img": "taca-premium.jpg", "visual": "Varia conforme o rótulo do momento.", "nose": "Consulte o sommelier do dia.", "mouth": "Seleção especial da casa.", "pitch": "Surpresa da casa. Pergunte ao sommelier o que está rodando e combine com o prato do cliente.", "harmoniza": "Consultar o sommelier do dia"}, {"id": 7, "cat": "Borbulhas", "name": "Lírica Crua Nature", "grapes": "Chardonnay, Pinot Noir", "region": "Serra do Sudeste · RS · Brasil", "price": "R$ 190", "img": "lirica-crua-nature.jpg", "visual": "Amarelo-palha com reflexos dourados, perlage fino.", "nose": "Brioche, frutas cítricas, amêndoa, complexidade de sur lie.", "mouth": "Seco (nature), cremoso, acidez viva, final longo e elegante.", "pitch": "Espumante de prestígio da casa. Nature, sem dosage. Ofereça com ostras, plateau, vieiras ou camarões e caviar. Para quem quer pureza.", "harmoniza": "Ostras · Plateau de frutos do mar · Vieiras grelhadas · Camarões e caviar"}, {"id": 8, "cat": "Borbulhas", "name": "Gazzaro Brut", "grapes": "Chardonnay", "region": "Flores da Cunha · RS · Brasil", "price": "R$ 172", "img": "gazzaro-brut.jpg", "visual": "Amarelo-palha, borbulhas persistentes.", "nose": "Cítricos, maçã, notas de fermentação.", "mouth": "Seco, fresco, boa estrutura, final limpo.", "pitch": "Espumante brasileiro confiável para brinde ou entrada. Bom com ostras, ceviche e couvert.", "harmoniza": "Ostras · Ceviche Arp · Couvert · Shakshuka"}, {"id": 9, "cat": "Borbulhas", "name": "Bossa N3 Rosé", "grapes": "Pinot Noir", "region": "Serra do Sudeste · RS · Brasil", "price": "R$ 172", "img": "bossa-n3-rose.jpg", "visual": "Rosa-claro a casca de cebola, elegante.", "nose": "Morango, framboesa, flores.", "mouth": "Seco, fresco, leve, final delicado.", "pitch": "Rosé brasileiro elegante. Visual bonito. Ofereça no pôr do sol ou com tacos, salada mediterrânea e ceviche.", "harmoniza": "Taco de camarão · Salada mediterrânea · Mozza! Tomate! · Ceviche Arp"}, {"id": 10, "cat": "Borbulhas", "name": "Dissegna Prosecco Millesimato Extra Dry", "grapes": "Glera", "region": "Vêneto · Itália", "price": "R$ 202", "img": "dissegna-prosecco.jpg", "visual": "Amarelo-palha claro, perlage vivo.", "nose": "Pêra, maçã verde, flores brancas.", "mouth": "Extra dry (leve doçura), fresco, fácil, final frutado.", "pitch": "Prosecco de safra única. Mais caráter que o comum. Bom para abrir mesa, ostras e empanada de queijo.", "harmoniza": "Ostras · Couvert · Empanada de queijo · Salada da horta"}, {"id": 11, "cat": "Borbulhas", "name": "Taittinger", "grapes": "Chardonnay, Pinot Noir, Pinot Meunier", "region": "Champagne · França", "price": "R$ 584", "img": "taittinger.jpg", "visual": "Amarelo-ouro claro, perlage muito fino e persistente.", "nose": "Brioche, cítricos, pêssego branco, complexidade clássica de Champagne.", "mouth": "Seco, cremoso, acidez brilhante, final longo e mineral.", "pitch": "Champagne de referência. Reserve para celebração, plateau, vieiras ou camarões e caviar.", "harmoniza": "Plateau de frutos do mar · Vieiras grelhadas · Camarões e caviar · Ostras"}, {"id": 12, "cat": "Branco", "name": "Arp Chardonnay", "grapes": "Chardonnay", "region": "RS · Brasil", "price": "R$ 168", "img": "arp-chardonnay.jpg", "visual": "Amarelo-palha, límpido.", "nose": "Maçã, pera, cítricos leves.", "mouth": "Leve a médio corpo, fresco, final limpo.", "pitch": "Chardonnay da casa em garrafa. Versátil com peixes, tartar e saladas. Opção segura e gastronômica.", "harmoniza": "Ceviche Arp · Duo de tartar · Salada da horta · Pesca do dia"}, {"id": 13, "cat": "Branco", "name": "Claude Val Blanc", "grapes": "Grenache Blanc, Vermentino, Sauvignon Blanc, Mauzac, Chasan", "region": "Languedoc-Roussillon · França", "price": "R$ 170", "img": "claude-val-blanc.jpg", "visual": "Amarelo-palha, transparente.", "nose": "Frutas brancas, flores, toque herbal.", "mouth": "Leve, fresco, boa acidez, final agradável.", "pitch": "Blend do sul da França. Fácil e gastronômico. Combina com salada mediterrânea, falafel e pesto.", "harmoniza": "Salada mediterrânea · Bolinhos de falafel · Taco de camarão · Rigatoni ao pesto"}, {"id": 14, "cat": "Branco", "name": "Savoir Giallo", "grapes": "Moscato Giallo", "region": "Serra Gaúcha · RS · Brasil", "price": "R$ 168", "img": "savoir-giallo.jpg", "visual": "Amarelo-palha com reflexos dourados.", "nose": "Muito aromático: flor de laranjeira, pêssego, mel, uva passa.", "mouth": "Seco, aromático, final floral.", "pitch": "Branco aromático. Ofereça como aperitivo ou com ceviche e tacos de camarão. Aroma chama atenção.", "harmoniza": "Ceviche Arp · Taco de camarão · Salada da horta · Frutas da estação"}, {"id": 15, "cat": "Branco", "name": "Duo Chardonnay Arneis", "grapes": "Chardonnay, Arneis", "region": "RS · Brasil", "price": "R$ 185", "img": "duo-chardonnay-arneis.jpg", "visual": "Amarelo-palha, límpido.", "nose": "Frutas de caroço, flores, leve mineralidade.", "mouth": "Médio corpo, boa textura, final equilibrado.", "pitch": "Blend com Arneis. Mais textura e complexidade. Bom com tartar, salmão, vieiras e camarões e caviar.", "harmoniza": "Duo de tartar · Salmão grelhado · Vieiras grelhadas · Camarões e caviar"}, {"id": 16, "cat": "Branco", "name": "San Pedro de Yacochuya Torrontés", "grapes": "Torrontés", "region": "Salta · Argentina", "price": "R$ 224", "img": "san-pedro-yacochuya.jpg", "visual": "Amarelo-palha, brilhante.", "nose": "Explosivo: flor de laranjeira, jasmim, pêssego, lychee.", "mouth": "Seco, aromático, acidez média, final floral intenso.", "pitch": "Torrontés de altitude. Explosivo no nariz. Combina muito bem com camarões thai e pratos aromáticos.", "harmoniza": "Camarões ao molho thai · Ceviche Arp · Taco de camarão · Salada da horta"}, {"id": 17, "cat": "Branco", "name": "Muros Antigos Escolha", "grapes": "Loureiro, Alvarinho, Avesso", "region": "Vinho Verde DOC · Minho · Portugal", "price": "R$ 192", "img": "muros-antigos.jpg", "visual": "Verdeal a amarelo-palha, muito transparente.", "nose": "Cítricos, maçã verde, flores brancas, mineral.", "mouth": "Seco, acidez alta e vibrante, leve, final muito fresco.", "pitch": "Vinho Verde de verdade. Acidez elétrica. O melhor amigo de ostras, ceviche e moules-frites.", "harmoniza": "Ostras · Ceviche Arp · Moules-frites · Plateau de frutos do mar"}, {"id": 18, "cat": "Branco", "name": "Charisma", "grapes": "Riesling", "region": "Pfalz · Alemanha", "price": "R$ 222", "img": "charisma.jpg", "visual": "Amarelo-palha com reflexos esverdeados.", "nose": "Cítricos, pêssego branco, floral, mineralidade típica de Riesling.", "mouth": "Seco a meio-seco, acidez vibrante, final longo e puro.", "pitch": "Riesling alemão. Frescor e elegância. Excelente com camarões thai, atum selado e também com camarões e caviar.", "harmoniza": "Camarões ao molho thai · Atum selado · Ceviche Arp · Camarões e caviar"}, {"id": 19, "cat": "Branco", "name": "Chablis Vieilles Vignes", "grapes": "Chardonnay", "region": "Bourgogne · França", "price": "R$ 356", "img": "chablis-vieilles-vignes.jpg", "visual": "Amarelo-palha com reflexos esverdeados.", "nose": "Mineral (pedra molhada), cítricos, maçã verde, pureza.", "mouth": "Seco, acidez alta, corpo médio, final mineral e longo.", "pitch": "Chablis de vinhas velhas. Mineralidade clássica. Para clientes exigentes com ostras, plateau, pesca do dia ou camarões e caviar.", "harmoniza": "Ostras · Plateau de frutos do mar · Pesca do dia · Camarões e caviar"}, {"id": 20, "cat": "Branco", "name": "Roditis", "grapes": "Roditis", "region": "Peloponeso · Grécia", "price": "R$ 223", "img": "roditis.jpg", "visual": "Amarelo-palha claro.", "nose": "Cítricos, pêra, flores, leve herbal.", "mouth": "Seco, fresco, boa acidez, final limpo.", "pitch": "Casta grega muito conhecida na região. Diferencial na carta. Leve e gastronômico — ceviche, salada mediterrânea e moules.", "harmoniza": "Ceviche Arp · Salada mediterrânea · Taco de camarão · Moules-frites"}, {"id": 21, "cat": "Branco", "name": "Casa Mia Inzolia DOC", "grapes": "Inzolia", "region": "Sicília · Itália", "price": "R$ 194", "img": "casa-mia-inzolia.jpg", "visual": "Amarelo-palha.", "nose": "Frutas amarelas, amêndoa, notas mediterrâneas.", "mouth": "Médio corpo, seco, boa textura, final amendoado.", "pitch": "Branco siciliano com personalidade. Combina com polvo, atum selado e pratos de azeite e ervas.", "harmoniza": "Polvo com arroz negro · Atum selado · Salada mediterrânea · Pesca do dia"}, {"id": 22, "cat": "Branco", "name": "Calabuig Blanco", "grapes": "Macabeo", "region": "Valencia · Espanha", "price": "R$ 196", "img": "calabuig-blanco.jpg", "visual": "Amarelo-palha.", "nose": "Frutas brancas, flores, leve mineral.", "mouth": "Seco, fresco, médio corpo, final limpo.", "pitch": "Macabeo de Valencia. Branco espanhol acessível. Bom com saladas, falafel e pesto.", "harmoniza": "Salada mediterrânea · Bolinhos de falafel · Rigatoni ao pesto · Ceviche Arp"}, {"id": 37, "cat": "Branco", "name": "Cumbres de Tagua Sauvignon Blanc", "grapes": "Sauvignon Blanc", "region": "Vale do Rapel · Chile", "price": "R$ 160", "img": "cumbres-sauvignon-blanc.jpg", "visual": "Verdeal a amarelo-palha, muito transparente.", "nose": "Maracujá, grama cortada, cítricos.", "mouth": "Ácido, vivo, seco, final refrescante.", "pitch": "Sauvignon clássico em garrafa. Ideal com ostras, ceviche e moules-frites. Acidez que limpa o paladar. Opção segura e gastronômica da casa.", "harmoniza": "Ostras · Ceviche Arp · Moules-frites · Salada mediterrânea"}, {"id": 23, "cat": "Natural", "name": "No Es Pituko Orange", "grapes": "Sauvignon Blanc", "region": "Valle de Curicó · Chile", "price": "R$ 149", "img": "no-es-pituko-orange.jpg", "visual": "Laranja-âmbar, pode ter leve turbidez (não filtrado).", "nose": "Casca de laranja, damasco, chá, notas oxidativas controladas.", "mouth": "Seco, textura tânica leve (contato com cascas), final complexo.", "pitch": "Laranja natural, sem sulfito. Para clientes curiosos. Combina com steak tartar, polvo e atum selado.", "harmoniza": "Steak tartar · Polvo com arroz negro · Empanada de carne · Atum selado"}, {"id": 24, "cat": "Natural", "name": "No Es Pituko Chardonnay", "grapes": "Chardonnay", "region": "Valle de Curicó · Chile", "price": "R$ 149", "img": "no-es-pituko-chardonnay.jpg", "visual": "Amarelo-ouro, pode ser levemente velado.", "nose": "Frutas maduras, levedura, notas de fermentação espontânea.", "mouth": "Seco, textura diferente dos Chardonnays convencionais, final vivo.", "pitch": "Chardonnay natural de mínima intervenção. Textura diferente. Bom com tartar, vieiras e salmão.", "harmoniza": "Duo de tartar · Vieiras grelhadas · Salmão grelhado · Casarecci caccio e pepe"}, {"id": 25, "cat": "Natural", "name": "Lazy Winemaker Laranja Natural", "grapes": "Sauvignon Blanc", "region": "Valle de Curicó · Chile", "price": "R$ 202", "img": "lazy-winemaker-laranja.jpg", "visual": "Âmbar a laranja, possível leve turbidez.", "nose": "Frutas secas, casca cítrica, especiarias, complexidade.", "mouth": "Seco, estruturado para um branco, taninos leves, final longo.", "pitch": "Laranja mais gastronômico da Curicó. Estrutura para comida. Polvo, steak tartar e camarões thai.", "harmoniza": "Polvo com arroz negro · Steak tartar · Atum selado · Camarões ao molho thai"}, {"id": 26, "cat": "Rosé", "name": "Savoir Merlot Rosé", "grapes": "Merlot", "region": "Serra Gaúcha · RS · Brasil", "price": "R$ 168", "img": "savoir-merlot-rose.jpg", "visual": "Rosa-cereja a rosa médio.", "nose": "Morango, framboesa, flores.", "mouth": "Leve, fresco, final frutado.", "pitch": "Rosé brasileiro de Merlot. Fácil e agradável. Bom com taco de porco, salada mediterrânea e mozza.", "harmoniza": "Taco de porco · Salada mediterrânea · Mozza! Tomate! · Empanada de queijo"}, {"id": 27, "cat": "Rosé", "name": "Claude Val Rosé", "grapes": "Grenache, Cinsault, Syrah", "region": "Languedoc-Roussillon · França", "price": "R$ 154", "img": "claude-val-rose.jpg", "visual": "Rosa-claro a casca de cebola.", "nose": "Frutas vermelhas leves, flores, frescor.", "mouth": "Seco, leve, boa acidez, final limpo.", "pitch": "Rosé no estilo provençal. Elegante e gastronômico. Ceviche, salada da horta e frango.", "harmoniza": "Ceviche Arp · Salada da horta · Taco de camarão · Peito de frango"}, {"id": 28, "cat": "Tinto", "name": "Pinot Noir Cuvée de Safras", "grapes": "Pinot Noir", "region": "São Joaquim · SC · Brasil", "price": "R$ 215", "img": "pinot-noir-cuvee-safras.jpg", "visual": "Vermelho-rubi claro, intensidade média-baixa.", "nose": "Cereja, framboesa, toque terroso, elegância.", "mouth": "Leve a médio corpo, taninos finos, boa acidez, final delicado.", "pitch": "Pinot de altitude (São Joaquim). O mais elegante dos tintos brasileiros. Frango, club sandwich e salmão.", "harmoniza": "Peito de frango · Club sandwich · Salmão grelhado · Casarecci caccio e pepe"}, {"id": 29, "cat": "Tinto", "name": "Beaujolais-Villages", "grapes": "Gamay", "region": "Beaujolais · França", "price": "R$ 248", "img": "beaujolais-villages.jpg", "visual": "Vermelho-rubi vivo, luminoso.", "nose": "Frutas vermelhas frescas, banana, violeta.", "mouth": "Leve, pouco tânico, muito frutado, final alegre.", "pitch": "Beaujolais clássico. Pode servir levemente fresco. Perfeito com steak tartar, burger e empanada.", "harmoniza": "Steak tartar · Empanada de carne · Arp burger · Peito de frango"}, {"id": 30, "cat": "Tinto", "name": "Arp Tempranillo", "grapes": "Tempranillo", "region": "Serra do Sudeste · RS · Brasil", "price": "R$ 168", "img": "arp-tempranillo.jpg", "visual": "Vermelho-rubi, intensidade média.", "nose": "Cereja, ameixa, especiarias leves.", "mouth": "Médio corpo, taninos macios, equilibrado.", "pitch": "Tinto da casa em garrafa. Confiável e gastronômico. Burger, tartar e empanada de carne.", "harmoniza": "Arp burger · Steak tartar · Empanada de carne · Club sandwich"}, {"id": 31, "cat": "Tinto", "name": "L80 Cabernet Franc", "grapes": "Cabernet Franc", "region": "Pinheiro Machado · RS · Brasil", "price": "R$ 198", "img": "l80-cabernet-franc.jpg", "visual": "Vermelho-rubi a granada, boa intensidade.", "nose": "Pimentão, frutas vermelhas, grafite, herbal.", "mouth": "Médio corpo, taninos presentes, boa acidez, final fresco.", "pitch": "Cabernet Franc brasileiro de caráter. Mais elegante que um Cabernet típico. Chorizo, filé e polvo.", "harmoniza": "Bife de chorizo · Filé au poivre · Steak tartar · Polvo com arroz negro"}, {"id": 32, "cat": "Tinto", "name": "Chianti", "grapes": "Sangiovese, Canaiolo", "region": "Toscana · Itália", "price": "R$ 202", "img": "chianti.jpg", "visual": "Vermelho-rubi com reflexos granada.", "nose": "Cereja ácida, violeta, ervas, toque terroso.", "mouth": "Médio corpo, acidez alta (clássica do Sangiovese), taninos médios, final seco.", "pitch": "Chianti clássico. A acidez pede comida — chorizo, filé e massas (pesto e caccio e pepe).", "harmoniza": "Bife de chorizo · Filé au poivre · Rigatoni ao pesto · Casarecci caccio e pepe"}, {"id": 33, "cat": "Tinto", "name": "Cumbres de Tagua Syrah", "grapes": "Syrah", "region": "Vale do Rapel · Chile", "price": "R$ 160", "img": "cumbres-syrah.jpg", "visual": "Vermelho-púrpura a rubi, intensidade boa.", "nose": "Amora, pimenta, toque defumado.", "mouth": "Médio a encorpado, taninos presentes, final especiado.", "pitch": "Syrah chileno acessível. Personalidade para filé au poivre, chorizo e burger.", "harmoniza": "Filé au poivre · Bife de chorizo · Arp burger · Steak tartar"}, {"id": 34, "cat": "Tinto", "name": "Unus Cabernet Sauvignon", "grapes": "Cabernet Sauvignon", "region": "Serra Gaúcha · Brasil", "price": "R$ 175", "img": "unus-cabernet-sauvignon.jpg", "visual": "Vermelho-rubi intenso.", "nose": "Cassis, pimentão, especiarias, madeira discreta.", "mouth": "Encorpado, taninos firmes, boa estrutura, final persistente.", "pitch": "Cabernet brasileiro estruturado. Para carnes vermelhas: filé, chorizo e burger.", "harmoniza": "Filé au poivre · Bife de chorizo · Arp burger · Steak tartar"}, {"id": 35, "cat": "Tinto", "name": "Saurus Malbec", "grapes": "Malbec", "region": "Patagônia · Argentina", "price": "R$ 192", "img": "saurus-malbec.jpg", "visual": "Vermelho-púrpura intenso, quase opaco.", "nose": "Ameixa, amora, violeta, chocolate, especiarias.", "mouth": "Encorpado, taninos maduros, final longo e frutado.", "pitch": "Malbec da Patagônia (mais fresco que Mendoza). Boa escolha para quem pede Malbec com filé ou chorizo.", "harmoniza": "Filé au poivre · Bife de chorizo · Arp burger · Empanada de carne"}, {"id": 36, "cat": "Sobremesa", "name": "Alambre Moscatel de Setúbal", "grapes": "Moscatel de Setúbal", "region": "Península de Setúbal · Portugal", "price": "R$ 35 taça · R$ 224 gfa", "img": "alambre-moscatel.jpg", "visual": "Âmbar a dourado profundo.", "nose": "Laranja cristalizada, mel, passas, especiarias doces, complexidade oxidativa.", "mouth": "Doce, untuoso, acidez equilibrada, final muito longo e aromático.", "pitch": "Clássico português de sobremesa. Ofereça com chocolate intenso, torta basca ou entremet de cupuaçu. Também sozinho.", "harmoniza": "Chocolate intenso e amendoim · Torta basca e pistache · Entremet de cupuaçu · Morangos e manjericão"}];
+const ACCESS={
+  adminUser:'admin',
+  adminPassword:'ArpBar2026',
+  jsonbinId:'',
+  jsonbinKey:''
+};
+const BASE_ORDER=['Taça','Borbulhas','Branco','Natural','Rosé','Tinto','Sobremesa'];
+const LABEL={Taça:'Taças',Borbulhas:'Borbulhas',Branco:'Brancos',Natural:'Naturais',Rosé:'Rosés',Tinto:'Tintos',Sobremesa:'Sobremesa'};
+const ICON={Taça:'🥂',Borbulhas:'🍾',Branco:'🥂',Natural:'🌿',Rosé:'🌸',Tinto:'🍷',Sobremesa:'🍯'};
+const EVENT_ICONS=['✨','🎉','🌙','⭐','🔥','🥂','🍷','🍾'];
+
+let WINES=structuredClone(SEED);
+let CUSTOM=[];
+let CATMETA={};
+let cat='all';
+let query='';
+let favOnly=false;
+let token=localStorage.getItem('arp-v6-token')||'';
+let user=sessionStorage.getItem('arp-v6-admin')==='1'?(ACCESS.adminUser||'admin'):null;
+let role=user?'admin':'';
+let authRole='admin';
+let editingId=null;
+let quiz=[];
+let qi=0;
+let qs=0;
+let UPDATED_AT=null;
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function priceNum(v){
+  const m=String(v||'').match(/\d+(?:[.,]\d+)?/);
+  return m?Number(m[0].replace(',','.')):0;
+}
+function country(r){
+  r=String(r||'').toLowerCase();
+  if(r.includes('brasil')||r.includes('rs ·')||r.includes('sc ·'))return'Brasil';
+  if(r.includes('chile'))return'Chile';
+  if(r.includes('argentina'))return'Argentina';
+  if(r.includes('frança')||r.includes('france')||r.includes('bourgogne')||r.includes('champagne')||r.includes('beaujolais'))return'França';
+  if(r.includes('itália')||r.includes('italia')||r.includes('toscana')||r.includes('vêneto'))return'Itália';
+  if(r.includes('portugal'))return'Portugal';
+  if(r.includes('grécia')||r.includes('grecia'))return'Grécia';
+  if(r.includes('alemanha'))return'Alemanha';
+  if(r.includes('espanha')||r.includes('rioja')||r.includes('valencia'))return'Espanha';
+  return'Outros';
+}
+function profiles(w){
+  const t=((w.nose||'')+' '+(w.mouth||'')+' '+(w.pitch||'')).toLowerCase();
+  const a=[];
+  if(/fresc|acidez|vivo|refresc/.test(t))a.push('Fresco');
+  if(/leve/.test(t))a.push('Leve');
+  if(/aromát|aromatic|perfume|fruta/.test(t))a.push('Aromático');
+  if(/encorp|estrutura|taninos firmes/.test(t))a.push('Encorpado');
+  else if(/médio corpo|medio corpo/.test(t))a.push('Médio corpo');
+  if(/seco/.test(t))a.push('Seco');
+  if(/doce|mel|sobremesa|unt[uú]oso/.test(t))a.push('Doce');
+  if(w.cat==='Natural'||isEventCat(w.cat))a.push(isEventCat(w.cat)?'Evento':'Natural');
+  return[...new Set(a)].slice(0,4);
+}
+function isEventCat(name){
+  return !!(CATMETA[name]&&CATMETA[name].kind==='evento');
+}
+function cats(){
+  const a=[...BASE_ORDER];
+  for(const c of CUSTOM)if(c&&!a.includes(c))a.push(c);
+  for(const w of WINES)if(w.cat&&!a.includes(w.cat))a.push(w.cat);
+  return a;
+}
+function normalizeImg(v){
+  v=String(v||'').trim().replace(/^['"]+|['"]+$/g,'');
+  if(!v)return'';
+  if(/^data:image\//i.test(v)||/^https?:\/\//i.test(v))return v;
+  if(v.startsWith('//'))return'https:'+v;
+  if(/^(www\.|[a-z0-9-]+\.[a-z0-9.-]+\/)/i.test(v))return'https://'+v;
+  return v;
+}
+function img(v){
+  v=normalizeImg(v);
+  if(!v)return'rotulos/placeholder.svg';
+  if(/^https?:\/\//i.test(v)||/^data:image\//i.test(v)||v.startsWith('/'))return v;
+  return v.startsWith('rotulos/')?v:'rotulos/'+v;
+}
+function favs(){try{return JSON.parse(localStorage.getItem('arp-v6-favs')||'[]')}catch{return[]}}
+function setFavs(a){localStorage.setItem('arp-v6-favs',JSON.stringify(a))}
+function isFav(id){return favs().includes(id)}
+function saveLocal(){
+  localStorage.setItem('arp-v6-wines',JSON.stringify(WINES));
+  localStorage.setItem('arp-v6-cats',JSON.stringify(CUSTOM));
+  localStorage.setItem('arp-v6-catmeta',JSON.stringify(CATMETA));
+  localStorage.setItem('arp-v6-updated',UPDATED_AT||'');
+}
+function loadLocal(){
+  try{
+    const w=JSON.parse(localStorage.getItem('arp-v6-wines'));
+    if(Array.isArray(w)&&w.length)WINES=w;
+    const c=JSON.parse(localStorage.getItem('arp-v6-cats'));
+    if(Array.isArray(c))CUSTOM=c.map(x=>typeof x==='string'?x:(x&&x.name)||'').filter(Boolean);
+    const m=JSON.parse(localStorage.getItem('arp-v6-catmeta')||'{}');
+    if(m&&typeof m==='object')CATMETA=m;
+    UPDATED_AT=localStorage.getItem('arp-v6-updated')||UPDATED_AT;
+  }catch{}
+}
+function applyRecord(rec){
+  if(!rec||!Array.isArray(rec.wines)||!rec.wines.length)return false;
+  WINES=rec.wines;
+  if(Array.isArray(rec.categories))CUSTOM=rec.categories.map(x=>typeof x==='string'?x:(x&&x.name)||'').filter(Boolean);
+  if(rec.catMeta&&typeof rec.catMeta==='object')CATMETA=rec.catMeta;
+  UPDATED_AT=rec.updatedAt||UPDATED_AT;
+  saveLocal();
+  return true;
+}
+function cartaPayload(){
+  return{version:6,updatedAt:new Date().toISOString(),wines:WINES,categories:CUSTOM,catMeta:CATMETA};
+}
+function ghCfg(){
+  try{return JSON.parse(localStorage.getItem('arp-v6-gh')||'{}')}catch{return{}}
+}
+function saveGhCfg(cfg){localStorage.setItem('arp-v6-gh',JSON.stringify(cfg))}
+function guessRepo(){
+  const host=location.hostname, parts=location.pathname.split('/').filter(Boolean);
+  if(host.endsWith('github.io')){
+    const owner=host.replace('.github.io','');
+    const repo=parts[0]&&!parts[0].endsWith('.html')?parts[0]:owner+'.github.io';
+    return{owner,repo,branch:'main',path:'data/wines-seed.json'};
+  }
+  return{owner:'',repo:'',branch:'main',path:'data/wines-seed.json'};
+}
+function utf8ToB64(str){return btoa(unescape(encodeURIComponent(str)))}
+function b64ToUtf8(str){return decodeURIComponent(escape(atob(str)))}
+async function pullPublicCarta(){
+  try{if(await pullJsonbin())return true}catch(e){console.warn(e)}
+  const urls=['data/wines-seed.json?ts='+Date.now(),'./data/wines-seed.json?ts='+Date.now()];
+  for(const url of urls){
+    try{
+      const r=await fetch(url,{cache:'no-store'});
+      if(!r.ok)continue;
+      const rec=await r.json();
+      if(applyRecord(rec))return true;
+    }catch{}
+  }
+  return false;
+}
+async function publishGitHub(){
+  const cfg=ghCfg();
+  if(!cfg.token||!cfg.owner||!cfg.repo)throw Error('Configure o token do GitHub no Admin.');
+  const path=(cfg.path||'data/wines-seed.json').replace(/^\/+/,'');
+  const api=`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`;
+  const headers={'Authorization':'Bearer '+cfg.token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+  let sha;
+  const get=await fetch(api+'?ref='+(cfg.branch||'main'),{headers});
+  if(get.ok){const j=await get.json();sha=j.sha}
+  else if(get.status!==404){const e=await get.json().catch(()=>({}));throw Error(e.message||'Falha ao ler o arquivo no GitHub.')}
+  UPDATED_AT=new Date().toISOString();
+  const body={message:'Atualiza carta de vinhos — '+UPDATED_AT,content:utf8ToB64(JSON.stringify(cartaPayload(),null,2)),branch:cfg.branch||'main'};
+  if(sha)body.sha=sha;
+  const put=await fetch(api,{method:'PUT',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const out=await put.json().catch(()=>({}));
+  if(!put.ok)throw Error(out.message||'Falha ao publicar no GitHub.');
+  saveLocal();
+  return true;
+}
+
+function buildCats(){
+  const el=$('cats');
+  if(!el)return;
+  const items=[{key:'all',label:'Todos',ico:'🍷',count:WINES.length,evt:false},
+    ...cats().map(c=>({key:c,label:LABEL[c]||c,ico:(CATMETA[c]&&CATMETA[c].icon)||ICON[c]||'🍷',count:WINES.filter(w=>w.cat===c).length,evt:isEventCat(c)}))];
+  el.innerHTML=items.map(c=>`<button class="cat${cat===c.key?' active':''}" type="button" data-cat="${esc(c.key)}"><span class="ico">${c.ico}</span><b>${esc(c.label)}</b><small>${c.count} rótulo${c.count===1?'':'s'}</small>${c.evt?'<span class="evt">Evento</span>':''}</button>`).join('');
+  el.querySelectorAll('[data-cat]').forEach(btn=>{
+    btn.onclick=()=>setCat(btn.dataset.cat);
+  });
+}
+function setCat(c){
+  cat=c;
+  buildCats();
+  render();
+  const list=$('list');
+  if(list)list.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function populate(){
+  const grapes=[...new Set(WINES.flatMap(w=>String(w.grapes||'').split(/,\s*/).map(x=>x.trim()).filter(Boolean)))].sort((a,b)=>a.localeCompare(b,'pt'));
+  const countries=[...new Set(WINES.map(w=>country(w.region)))].sort((a,b)=>a.localeCompare(b,'pt'));
+  if($('grapeFilter'))$('grapeFilter').innerHTML='<option value="">Todas as uvas</option>'+grapes.map(x=>`<option>${esc(x)}</option>`).join('');
+  if($('countryFilter'))$('countryFilter').innerHTML='<option value="">Todos os países</option>'+countries.map(x=>`<option>${esc(x)}</option>`).join('');
+  if($('heroCount'))$('heroCount').textContent=WINES.length;
+  if($('heroCountries'))$('heroCountries').textContent=countries.length;
+  if($('heroGrapes'))$('heroGrapes').textContent=grapes.length;
+  if($('categoryHint'))$('categoryHint').textContent=`${WINES.length} rótulos`;
+}
+function filtered(){
+  let ws=[...WINES];
+  const q=query.toLowerCase();
+  const gf=$('grapeFilter')?$('grapeFilter').value:'';
+  const cf=$('countryFilter')?$('countryFilter').value:'';
+  const sf=$('styleFilter')?$('styleFilter').value:'';
+  const max=Number(($('priceFilter')&&$('priceFilter').value)||999999);
+  if(cat!=='all')ws=ws.filter(w=>w.cat===cat);
+  if(q)ws=ws.filter(w=>(w.name+' '+w.grapes+' '+w.region+' '+(w.harmoniza||'')+' '+(w.pitch||'')+' '+(w.pratos||'')+' '+profiles(w).join(' ')).toLowerCase().includes(q));
+  if(gf)ws=ws.filter(w=>String(w.grapes).split(/,\s*/).map(x=>x.trim()).includes(gf));
+  if(cf)ws=ws.filter(w=>country(w.region)===cf);
+  if(sf)ws=ws.filter(w=>profiles(w).some(p=>p.toLowerCase()===sf.toLowerCase()));
+  if($('priceFilter')&&$('priceFilter').value)ws=ws.filter(w=>priceNum(w.price)<=max);
+  if(favOnly)ws=ws.filter(w=>isFav(w.id));
+  return ws;
+}
+function card(w){
+  const ps=profiles(w);
+  return `<article class="card" data-id="${w.id}"><div class="cardtop"><img class="thumb" src="${img(w.img)}" alt="${esc(w.name)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='rotulos/placeholder.svg'"><div class="wineinfo"><span class="badge">${esc(LABEL[w.cat]||w.cat)}</span><h3>${esc(w.name)}</h3><div class="meta"><b>${esc(w.grapes)}</b><br>${esc(w.region)}</div><div class="price">${esc(w.price)}</div></div></div><div class="cardfoot">${ps.slice(0,3).map(p=>`<span class="tag">${esc(p)}</span>`).join('')}<button type="button" class="${isFav(w.id)?'on':''}" data-fav="${w.id}">${isFav(w.id)?'★':'☆'}</button></div></article>`;
+}
+function render(){
+  const ws=filtered();
+  if($('count'))$('count').textContent=`${ws.length} vinho${ws.length===1?'':'s'}`;
+  if($('list')){
+    $('list').innerHTML=ws.length?ws.map(card).join(''):'<div class="empty">Nenhum vinho encontrado.<br><br>Tente remover um filtro ou usar outro termo.</div>';
+    $('list').querySelectorAll('.card').forEach(el=>{
+      el.onclick=e=>{
+        if(e.target.closest('[data-fav]'))return;
+        openDetail(Number(el.dataset.id));
+      };
+    });
+    $('list').querySelectorAll('[data-fav]').forEach(btn=>{
+      btn.onclick=e=>{e.stopPropagation();toggleFav(Number(btn.dataset.fav));};
+    });
+  }
+}
+function toggleFav(id){
+  let a=favs();
+  a=a.includes(id)?a.filter(x=>x!==id):[...a,id];
+  setFavs(a);
+  render();
+  if(user)syncFavs(a);
+}
+
+async function api(path,opt={}){
+  const h=new Headers(opt.headers||{});
+  h.set('Content-Type','application/json');
+  if(token)h.set('Authorization','Bearer '+token);
+  const r=await fetch('/api'+path,{...opt,headers:h});
+  let b=null;
+  try{b=await r.json()}catch{}
+  if(!r.ok)throw Error(b?.error||`Erro ${r.status}`);
+  return b;
+}
+async function syncFavs(a){try{await api('/favorites',{method:'PUT',body:JSON.stringify({favorites:a})})}catch(e){console.warn(e)}}
+async function syncCloud(){
+  try{
+    const r=await api('/wines');
+    if(Array.isArray(r.wines)&&r.wines.length){
+      WINES=r.wines;
+      if(Array.isArray(r.categories))CUSTOM=r.categories.map(x=>typeof x==='string'?x:x.name).filter(Boolean);
+      saveLocal();populate();buildCats();render();
+      if($('status'))$('status').textContent='Sincronizado';
+      if($('syncStatus'))$('syncStatus').textContent='Online';
+    }
+  }catch(e){
+    if($('status'))$('status').textContent='Modo local';
+    if($('syncStatus'))$('syncStatus').textContent='Local';
+  }
+}
+async function restore(){
+  if($('status'))$('status').textContent='Carregando carta…';
+  const ok=await pullPublicCarta();
+  if(ok){
+    populate();buildCats();render();
+    if($('status'))$('status').textContent='Carta compartilhada';
+    if($('syncStatus'))$('syncStatus').textContent='Equipe';
+  }else{
+    if($('status'))$('status').textContent='Modo local';
+    if($('syncStatus'))$('syncStatus').textContent='Local';
+  }
+  if(!token){syncCloud();return;}
+  try{
+    const s=await api('/session');
+    user=s.username;role=s.role;
+    await syncCloud();
+    try{const f=await api('/favorites');if(Array.isArray(f.favorites))setFavs(f.favorites)}catch{}
+    updateNav();
+  }catch{
+    token='';localStorage.removeItem('arp-v6-token');
+  }
+}
+function updateNav(){
+  if($('adminNav'))$('adminNav').textContent=user?(role==='admin'?'⚙ Painel':'⚙ Conta'):'⚙ Admin';
+}
+
+function openSheet(content){
+  $('sheet').innerHTML=content;
+  $('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSheet(){
+  $('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function openDetail(id){
+  const w=WINES.find(x=>x.id===id);
+  if(!w)return;
+  openSheet(`<button class="close" type="button" onclick="closeSheet()">×</button>
+    <div class="sheethead"><div class="eyebrow">${esc(LABEL[w.cat]||w.cat)}${isEventCat(w.cat)?' · Evento':''}</div>
+    <div class="detail"><img src="${img(w.img)}" alt="${esc(w.name)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='rotulos/placeholder.svg'">
+    <div><h2>${esc(w.name)}</h2><div class="grape">${esc(w.grapes)}</div><div class="regi">${esc(w.region)}</div><div class="price">${esc(w.price)}</div>
+    <div class="actions"><button class="primary" type="button" onclick="toggleFav(${w.id});openDetail(${w.id})">${isFav(w.id)?'★ Nos favoritos':'☆ Favoritar'}</button>
+    <button type="button" onclick="openFinder(${w.id})">✦ Semelhantes</button></div></div></div></div>
+    <div class="sheetbody"><div class="detailgrid">
+      <div><b>Visual</b><p>${esc(w.visual||'—')}</p></div>
+      <div><b>Olfativo</b><p>${esc(w.nose||'—')}</p></div>
+      <div><b>Gustativo</b><p>${esc(w.mouth||'—')}</p></div>
+      <div><b>Harmonização</b><p>${esc(w.harmoniza||'—')}</p></div>
+      ${w.pratos?`<div><b>Pratos</b><p>${esc(w.pratos)}</p></div>`:''}
+    </div>
+    <div style="margin-top:16px"><b>Para o salão</b><p>${esc(w.pitch||'—')}</p></div></div>`);
+}
+
+function openFinder(refId){
+  const ref=refId?WINES.find(w=>w.id===refId):null;
+  openSheet(`<button class="close" type="button" onclick="closeSheet()">×</button>
+    <div class="finder"><div class="eyebrow">Modo salão</div><h2>Encontrar o vinho certo</h2>
+    <p>Escolha o que o cliente quer. O sistema ordena as melhores opções por aderência.</p>
+    <div class="finder-grid">
+      <div><label>Tipo</label><select id="fc"><option value="">Qualquer</option>${cats().map(c=>`<option>${esc(c)}</option>`).join('')}</select></div>
+      <div><label>Perfil</label><select id="fs"><option value="">Qualquer</option><option>Leve</option><option>Fresco</option><option>Aromático</option><option>Médio corpo</option><option>Encorpado</option><option>Seco</option><option>Doce</option><option>Natural</option></select></div>
+      <div><label>Faixa de preço</label><select id="fp"><option value="999999">Sem limite</option><option value="170">Até R$ 170</option><option value="200">Até R$ 200</option><option value="250">Até R$ 250</option></select></div>
+      <div><label>Prato / ingrediente</label><input id="fd" placeholder="Ex.: ostras, chorizo, ceviche"></div>
+    </div>
+    <div class="actions"><button class="primary" type="button" id="runFinderBtn">Encontrar</button><button type="button" onclick="closeSheet()">Fechar</button></div>
+    <div id="finderResults"></div>
+    ${ref?`<div class="feedback">Referência: <b>${esc(ref.name)}</b>.</div>`:''}
+    </div>`);
+  $('runFinderBtn').onclick=runFinder;
+  runFinder();
+}
+function runFinder(){
+  const c=$('fc')?$('fc').value:'';
+  const s=$('fs')?$('fs').value:'';
+  const max=Number(($('fp')&&$('fp').value)||999999);
+  const d=(($('fd')&&$('fd').value)||'').toLowerCase();
+  const arr=WINES.map(w=>{
+    let score=0;
+    if(c&&w.cat===c)score+=30;
+    if(s&&profiles(w).includes(s))score+=25;
+    if(priceNum(w.price)<=max)score+=15;else score-=20;
+    if(d){
+      const txt=(w.harmoniza+' '+w.pitch+' '+w.name+' '+w.grapes+' '+(w.pratos||'')).toLowerCase();
+      if(txt.includes(d))score+=30;
+      else for(const term of d.split(/\s+/))if(term.length>2&&txt.includes(term))score+=8;
+    }
+    return{w,score};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
+  $('finderResults').innerHTML=arr.length?arr.map(x=>`<div class="result"><div class="resultline"><img src="${img(x.w.img)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='rotulos/placeholder.svg'"><div style="flex:1"><h3>${esc(x.w.name)}</h3><div class="meta">${esc(x.w.grapes)} · ${esc(x.w.region)}<br>${esc(x.w.price)}</div><div class="scorebar"><i style="width:${Math.min(100,Math.max(10,x.score))}%"></i></div></div><button class="pill" type="button" data-open="${x.w.id}">Ficha</button></div></div>`).join(''):'<div class="empty">Nenhum resultado. Flexibilize um dos critérios.</div>';
+  $('finderResults').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openDetail(Number(b.dataset.open)));
+}
+
+function uniqueOpts(correct, pool, n=3){
+  const rest=[...new Set(pool.filter(Boolean).filter(g=>g!==correct))];
+  rest.sort(()=>Math.random()-.5);
+  const opts=[correct,...rest.slice(0,n)].filter(Boolean);
+  return[...new Set(opts)].sort(()=>Math.random()-.5);
+}
+function makeQuestions(){
+  const pool=[...WINES].filter(w=>w.name&&w.grapes);
+  pool.sort(()=>Math.random()-.5);
+  return pool.slice(0,8).map((w,i)=>{
+    const type=i%4;
+    if(type===0)return{w,type,q:`Qual é a uva ou composição de ${w.name}?`,opts:uniqueOpts(w.grapes,WINES.map(x=>x.grapes)),ans:w.grapes,why:`A ficha informa ${w.grapes}.`};
+    if(type===1)return{w,type,q:`Qual harmonização está registrada para ${w.name}?`,opts:uniqueOpts(w.harmoniza,WINES.map(x=>x.harmoniza)),ans:w.harmoniza,why:`A harmonização cadastrada é: ${w.harmoniza||'—'}.`};
+    if(type===2){
+      const ps=profiles(w);const ans=ps[0]||'Fresco';
+      const opts=uniqueOpts(ans,['Encorpado','Leve','Aromático','Fresco','Seco','Doce']);
+      return{w,type,q:`Pelo conjunto da ficha, qual perfil aparece com mais força em ${w.name}?`,opts,ans,why:`Leitura da ficha: ${ps.join(', ')||'sem perfil automático'}.`};
+    }
+    const ans=country(w.region);
+    return{w,type,q:`A região de ${w.name} pertence a qual país?`,opts:uniqueOpts(ans,['Brasil','Chile','Argentina','França','Itália','Portugal','Espanha','Grécia']),ans,why:`A região cadastrada é ${w.region}.`};
+  });
+}
+function openTraining(){
+  quiz=makeQuestions();qi=0;qs=0;
+  openSheet(`<button class="close" type="button" onclick="closeSheet()">×</button>
+    <div class="finder"><div class="eyebrow">Treinamento · ${quiz.length} questões</div>
+    <h2>Desafio de conhecimento</h2>
+    <p>Uva, harmonização, perfil e origem — do jeito que cai no salão.</p>
+    <div id="quizBox"></div></div>`);
+  nextQuiz();
+}
+function nextQuiz(){
+  const b=$('quizBox');
+  if(!b)return;
+  if(!quiz.length){b.innerHTML='<div class="feedback">Não há vinhos suficientes para montar o treino.</div>';return;}
+  if(qi>=quiz.length){
+    b.innerHTML=`<div class="feedback"><b>Treinamento concluído.</b><br>Resultado: ${qs}/${quiz.length} (${Math.round(qs/quiz.length*100)}%).</div>
+      <div class="actions"><button class="primary" type="button" id="newQuiz">Novo desafio</button></div>`;
+    $('newQuiz').onclick=openTraining;
+    return;
+  }
+  const q=quiz[qi];
+  b.innerHTML=`<div class="score">Questão ${qi+1} de ${quiz.length} · ${qs} acertos</div>
+    <div class="quizq"><b>${esc(q.q)}</b><br><small style="color:var(--muted)">Vinho: ${esc(q.w.name)}</small></div>
+    <div class="answers">${q.opts.map((o,idx)=>`<button type="button" data-opt="${idx}">${esc(o||'—')}</button>`).join('')}</div>`;
+  b.querySelectorAll('[data-opt]').forEach(btn=>btn.onclick=()=>answer(btn,Number(btn.dataset.opt)));
+}
+function answer(btn,idx){
+  const q=quiz[qi];
+  if(!q)return;
+  document.querySelectorAll('.answers button').forEach(x=>x.disabled=true);
+  const choice=q.opts[idx];
+  const ok=choice===q.ans;
+  if(ok){qs++;btn.classList.add('correct');}
+  else{
+    btn.classList.add('wrong');
+    document.querySelectorAll('.answers button').forEach(x=>{
+      if(x.textContent===q.ans)x.classList.add('correct');
+    });
+  }
+  $('quizBox').insertAdjacentHTML('beforeend',`<div class="feedback"><b>${ok?'✓ Correto':'✕ Atenção'}</b><br>${esc(q.why)}</div>
+    <div class="actions"><button class="primary" type="button" id="nextQ">${qi+1<quiz.length?'Próxima':'Ver resultado'}</button></div>`);
+  $('nextQ').onclick=()=>{qi++;nextQuiz();};
+}
+
+function cloudReady(){return !!(ACCESS.jsonbinId&&ACCESS.jsonbinKey)}
+async function pullJsonbin(){
+  if(!ACCESS.jsonbinId)return false;
+  const headers={'Accept':'application/json'};
+  if(ACCESS.jsonbinKey)headers['X-Master-Key']=ACCESS.jsonbinKey;
+  const r=await fetch('https://api.jsonbin.io/v3/b/'+ACCESS.jsonbinId+'/latest',{headers,cache:'no-store'});
+  if(!r.ok)return false;
+  const j=await r.json();
+  return applyRecord(j.record||j);
+}
+async function pushJsonbin(){
+  if(!cloudReady())throw Error('JSONBin ainda não foi configurado no index.html.');
+  const r=await fetch('https://api.jsonbin.io/v3/b/'+ACCESS.jsonbinId,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json','X-Master-Key':ACCESS.jsonbinKey},
+    body:JSON.stringify(cartaPayload())
+  });
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw Error(j.message||('JSONBin '+r.status));
+  return true;
+}
+function openAuth(which='admin'){
+  authRole=which;
+  openSheet(`<div class="login"><div class="eyebrow">Acesso restrito</div><h2>Entrar no Admin</h2>
+    <p>Quem entra aqui altera a carta de toda a equipe.</p>
+    <div class="field"><label>Usuário</label><input id="au" autocomplete="username"></div>
+    <div class="field"><label>Senha</label><input id="ap" type="password" autocomplete="current-password"></div>
+    <div class="error" id="ae"></div>
+    <button class="btnfull" type="button" id="doLogin">Entrar</button>
+    <p class="modehint">${cloudReady()?'A carta compartilhada está ligada.':'Falta configurar JSONBin no index.html — sem isso o save não vai para os outros aparelhos.'}</p></div>`);
+  $('doLogin').onclick=login;
+  $('ap').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
+}
+async function login(){
+  const u=$('au').value.trim(),p=$('ap').value;
+  if(!u||!p){$('ae').textContent='Informe usuário e senha.';return;}
+  if(u===ACCESS.adminUser&&p===ACCESS.adminPassword){
+    user=u;role='admin';
+    sessionStorage.setItem('arp-v6-admin','1');
+    updateNav();
+    closeSheet();
+    try{await pullJsonbin();populate();buildCats();render()}catch{}
+    openAdmin();
+    return;
+  }
+  try{
+    const r=await api('/login',{method:'POST',body:JSON.stringify({username:u,password:p,role:authRole||'admin'})});
+    token=r.token;localStorage.setItem('arp-v6-token',token);user=r.username;role=r.role;
+    sessionStorage.setItem('arp-v6-admin','1');
+    await syncCloud();
+    closeSheet();updateNav();openAdmin();
+  }catch(e){$('ae').textContent='Usuário ou senha inválidos.'}
+}
+async function logout(){
+  token='';user=null;role='';
+  localStorage.removeItem('arp-v6-token');
+  sessionStorage.removeItem('arp-v6-admin');
+  updateNav();
+  closeAdmin();
+}
+
+function openAdmin(){
+  if(role!=='admin'&&sessionStorage.getItem('arp-v6-admin')!=='1'){openAuth('admin');return;}
+  role='admin';
+  renderAdmin();
+  document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+  $('adminNav').classList.add('active');
+  $('catalog').classList.add('hidden');
+  $('adminView').classList.remove('hidden');
+}
+function closeAdmin(){
+  $('adminView').classList.add('hidden');
+  $('catalog').classList.remove('hidden');
+  document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+  const b=document.querySelector('[data-view="catalog"]');
+  if(b)b.classList.add('active');
+  populate();buildCats();render();
+}
+function catOptions(selected){
+  return cats().map(c=>`<option ${c===selected?'selected':''}>${esc(c)}</option>`).join('');
+}
+function renderAdmin(){
+  $('adminView').innerHTML=`
+  <section class="section" style="padding:30px 0 60px">
+    <div class="section-head">
+      <div><div class="eyebrow">Gestão da carta</div><h2>Administração</h2>
+      <small>Salvar publica a carta no GitHub para toda a equipe.</small></div>
+      <div class="actions">
+        <button type="button" onclick="closeAdmin()">← Carta</button>
+        <button type="button" onclick="exportData()">Exportar JSON</button>
+        <button type="button" onclick="openAuth('admin')">Sincronizar</button>
+        ${user?`<button type="button" onclick="logout();renderAdmin()">Sair</button>`:''}
+      </div>
+    </div>
+    <p class="modehint" id="publishHint"></p>
+    <div class="admin-grid">
+      <div class="admin-card full">
+        <h3>Publicar para todos</h3>
+        <p class="modehint">Cole um token do GitHub com permissão de gravar neste repositório. Só no seu aparelho. A equipe não precisa do token — ela só abre o site.</p>
+        <div class="formgrid">
+          <div class="field"><label>Dono (user/org)</label><input id="ghOwner"></div>
+          <div class="field"><label>Repositório</label><input id="ghRepo"></div>
+          <div class="field"><label>Branch</label><input id="ghBranch" placeholder="main"></div>
+          <div class="field"><label>Arquivo</label><input id="ghPath" placeholder="data/wines-seed.json"></div>
+          <div class="field full"><label>Token</label><input id="ghToken" type="password" autocomplete="off" placeholder="ghp_..."></div>
+          <div class="field full">
+            <button class="primary pill" type="button" id="saveGhBtn">Salvar conexão</button>
+            <button class="pill" type="button" id="publishNowBtn">Publicar agora</button>
+          </div>
+        </div>
+      </div>
+      <div class="admin-card">
+        <h3>Categorias e eventos</h3>
+        <p class="modehint">Crie uma categoria para carta especial (jantar, Réveillon, harmonização). Depois associe os vinhos a ela. Pratos entram no campo do vinho e, no futuro, como cardápio próprio.</p>
+        <div class="catmgr">
+          <input id="newCatName" placeholder="Ex.: Réveillon 2026" style="flex:1;min-width:160px">
+          <select id="newCatKind"><option value="evento">Evento especial</option><option value="carta">Categoria fixa</option></select>
+          <select id="newCatIcon">${EVENT_ICONS.map(i=>`<option>${i}</option>`).join('')}</select>
+          <button class="primary pill" type="button" id="addCatBtn">Adicionar</button>
+        </div>
+        <div class="chiprow" id="catChips"></div>
+      </div>
+      <div class="admin-card">
+        <h3>Editor de vinho</h3>
+        <div class="formgrid">
+          <div class="field"><label>Nome</label><input id="fn"></div>
+          <div class="field"><label>Categoria</label><select id="fcg">${catOptions('Branco')}</select></div>
+          <div class="field"><label>Uvas</label><input id="fg"></div>
+          <div class="field"><label>Região</label><input id="fr"></div>
+          <div class="field"><label>Preço</label><input id="fpv" placeholder="R$ 180"></div>
+          <div class="field full"><label>Imagem</label>
+            <input id="fi" placeholder="https://… ou arquivo.jpg">
+            <div class="imgprev"><img id="imgPreview" src="rotulos/placeholder.svg" alt="preview" referrerpolicy="no-referrer">
+            <small id="imgHint">Cole um link direto de imagem (termina em .jpg/.png/.webp) ou o nome do arquivo em /rotulos.</small></div>
+          </div>
+          <div class="field full"><label>Visual</label><textarea id="fv"></textarea></div>
+          <div class="field full"><label>Olfativo</label><textarea id="fnose"></textarea></div>
+          <div class="field full"><label>Gustativo</label><textarea id="fm"></textarea></div>
+          <div class="field full"><label>Harmonização</label><textarea id="fh"></textarea></div>
+          <div class="field full"><label>Pratos (texto livre — base para o cardápio futuro)</label><textarea id="fpratos" placeholder="Ex.: Ceviche Arp, ostras, moules-frites"></textarea></div>
+          <div class="field full"><label>Para o salão</label><textarea id="fpi"></textarea></div>
+          <div class="field full">
+            <button class="primary pill" type="button" id="saveWineBtn">Salvar vinho</button>
+            <button class="pill" type="button" id="clearFormBtn">Novo</button>
+          </div>
+        </div>
+      </div>
+      <div class="admin-card full">
+        <h3>Rótulos</h3>
+        <input id="aq" placeholder="Filtrar lista" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px">
+        <div id="adminList"></div>
+      </div>
+    </div>
+  </section>`;
+  editingId=null;
+  drawCatChips();
+  adminList();
+  $('addCatBtn').onclick=addCategory;
+  $('saveWineBtn').onclick=saveWine;
+  $('clearFormBtn').onclick=clearForm;
+  $('aq').oninput=adminList;
+  $('fi').oninput=updateImgPreview;
+  $('newCatName').addEventListener('keydown',e=>{if(e.key==='Enter')addCategory();});
+  const guessed=guessRepo();
+  const cfg={...guessed,...ghCfg()};
+  if($('ghOwner'))$('ghOwner').value=cfg.owner||'';
+  if($('ghRepo'))$('ghRepo').value=cfg.repo||'';
+  if($('ghBranch'))$('ghBranch').value=cfg.branch||'main';
+  if($('ghPath'))$('ghPath').value=cfg.path||'data/wines-seed.json';
+  if($('ghToken'))$('ghToken').value=cfg.token||'';
+  if($('publishHint'))$('publishHint').textContent=cfg.token?'Token configurado. Salvar vinho ou categoria publica para todos.':'Sem token: as edições ficam só neste aparelho.';
+  if($('saveGhBtn'))$('saveGhBtn').onclick=()=>{
+    const next={owner:$('ghOwner').value.trim(),repo:$('ghRepo').value.trim(),branch:$('ghBranch').value.trim()||'main',path:$('ghPath').value.trim()||'data/wines-seed.json',token:$('ghToken').value.trim()};
+    saveGhCfg(next);
+    alert(next.token?'Conexão salva neste aparelho.':'Informe o token.');
+    renderAdmin();
+  };
+  if($('publishNowBtn'))$('publishNowBtn').onclick=async()=>{
+    try{await persistWinesCloud();alert('Carta publicada. Peça à equipe um refresh em 1 minuto.');}
+    catch(e){alert(e.message)}
+  };
+}
+function drawCatChips(){
+  const el=$('catChips');
+  if(!el)return;
+  const custom=CUSTOM.slice();
+  el.innerHTML=cats().map(c=>{
+    const evt=isEventCat(c);
+    const locked=BASE_ORDER.includes(c);
+    return `<span class="chip">${(CATMETA[c]&&CATMETA[c].icon)||ICON[c]||'🍷'} ${esc(c)}${evt?' · evento':''}${locked?'':'<button type="button" data-del="'+esc(c)+'" title="Remover">×</button>'}</span>`;
+  }).join('')||'<small class="modehint">Nenhuma categoria extra.</small>';
+  el.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>removeCategory(b.dataset.del));
+}
+function addCategory(){
+  const name=($('newCatName').value||'').trim();
+  if(!name)return alert('Dê um nome à categoria.');
+  if(cats().some(c=>c.toLowerCase()===name.toLowerCase()))return alert('Essa categoria já existe.');
+  CUSTOM.push(name);
+  CATMETA[name]={icon:$('newCatIcon').value||'✨',kind:$('newCatKind').value||'evento'};
+  saveLocal();
+  $('newCatName').value='';
+  if($('fcg'))$('fcg').innerHTML=catOptions(name);
+  drawCatChips();
+  populate();buildCats();
+  persistWinesCloud().catch(e=>alert(e.message));
+}
+function removeCategory(name){
+  const used=WINES.some(w=>w.cat===name);
+  if(used&&!confirm(`Há vinhos em “${name}”. Remover a categoria mesmo assim? Eles ficam sem categoria especial.`))return;
+  CUSTOM=CUSTOM.filter(c=>c!==name);
+  delete CATMETA[name];
+  saveLocal();
+  if($('fcg'))$('fcg').innerHTML=catOptions('Branco');
+  drawCatChips();
+  populate();buildCats();render();
+  persistWinesCloud().catch(e=>alert(e.message));
+}
+function adminList(){
+  const q=(($('aq')&&$('aq').value)||'').toLowerCase();
+  const ws=WINES.filter(w=>(w.name+' '+w.grapes+' '+w.region+' '+w.cat).toLowerCase().includes(q));
+  $('adminList').innerHTML=ws.map(w=>`<div class="adminrow">
+      <img src="${img(w.img)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='rotulos/placeholder.svg'">
+      <div class="grow"><strong>${esc(w.name)}</strong><small>${esc(w.cat)} · ${esc(w.price)}</small></div>
+      <button type="button" data-edit="${w.id}">Editar</button>
+      <button type="button" data-delw="${w.id}" style="color:var(--red)">Excluir</button>
+    </div>`).join('')||'<div class="empty">Nenhum vinho.</div>';
+  $('adminList').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editWine(Number(b.dataset.edit)));
+  $('adminList').querySelectorAll('[data-delw]').forEach(b=>b.onclick=()=>deleteWine(Number(b.dataset.delw)));
+}
+function updateImgPreview(){
+  const raw=$('fi').value.trim();
+  const src=img(raw);
+  const preview=$('imgPreview');
+  const hint=$('imgHint');
+  preview.onerror=()=>{preview.onerror=null;preview.src='rotulos/placeholder.svg';if(hint)hint.textContent='Link inválido ou bloqueado. Use URL direta da imagem, não a página do produto.';};
+  preview.src=src||'rotulos/placeholder.svg';
+  if(hint){
+    if(/^https?:\/\//i.test(normalizeImg(raw)))hint.textContent='Link externo. Se a preview falhar, o site de origem está bloqueando. Prefira um arquivo em /rotulos ou um link .jpg direto.';
+    else if(raw)hint.textContent='Arquivo local em /rotulos/'+raw.replace(/^rotulos\//,'');
+    else hint.textContent='Cole um link direto de imagem ou o nome do arquivo em /rotulos.';
+  }
+}
+function clearForm(){
+  editingId=null;
+  ['fn','fg','fr','fpv','fi','fv','fnose','fm','fh','fpratos','fpi'].forEach(x=>{if($(x))$(x).value='';});
+  if($('fcg'))$('fcg').value=cats().includes('Branco')?'Branco':(cats()[0]||'');
+  updateImgPreview();
+}
+function editWine(id){
+  const w=WINES.find(x=>x.id===id);
+  if(!w)return;
+  editingId=id;
+  const map=[['fn','name'],['fg','grapes'],['fr','region'],['fpv','price'],['fi','img'],['fv','visual'],['fnose','nose'],['fm','mouth'],['fh','harmoniza'],['fpratos','pratos'],['fpi','pitch']];
+  for(const [a,b] of map)if($(a))$(a).value=w[b]||'';
+  if($('fcg')){
+    if(w.cat&&![...$('fcg').options].some(o=>o.value===w.cat)){
+      const opt=document.createElement('option');opt.textContent=w.cat;$('fcg').appendChild(opt);
+    }
+    $('fcg').value=w.cat;
+  }
+  updateImgPreview();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+async function persistWinesCloud(){
+  if(cloudReady()&&(role==='admin'||sessionStorage.getItem('arp-v6-admin')==='1')){
+    await pushJsonbin();
+    return 'jsonbin';
+  }
+  const cfg=ghCfg();
+  if(cfg.token&&cfg.owner&&cfg.repo){
+    await publishGitHub();
+    return 'github';
+  }
+  if(!token||role!=='admin')return false;
+  const r=await api('/wines',{method:'PUT',body:JSON.stringify({wines:WINES,categories:CUSTOM})});
+  if(Array.isArray(r.wines))WINES=r.wines;
+  if(Array.isArray(r.categories))CUSTOM=r.categories.map(x=>typeof x==='string'?x:x.name).filter(Boolean);
+  return 'api';
+}
+async function saveWine(){
+  const name=($('fn').value||'').trim();
+  if(!name)return alert('Informe o nome.');
+  const w={
+    id:editingId||Math.max(0,...WINES.map(x=>Number(x.id)||0))+1,
+    name,
+    cat:$('fcg').value,
+    grapes:$('fg').value.trim(),
+    region:$('fr').value.trim(),
+    price:$('fpv').value.trim(),
+    img:normalizeImg($('fi').value.trim())||'placeholder.svg',
+    visual:$('fv').value.trim(),
+    nose:$('fnose').value.trim(),
+    mouth:$('fm').value.trim(),
+    harmoniza:$('fh').value.trim(),
+    pratos:$('fpratos').value.trim(),
+    pitch:$('fpi').value.trim()
+  };
+  const i=WINES.findIndex(x=>String(x.id)===String(w.id));
+  if(i>=0)WINES[i]=w;else WINES.push(w);
+  saveLocal();
+  let cloud=false;
+  try{cloud=await persistWinesCloud()}catch(e){console.warn(e)}
+  clearForm();populate();buildCats();renderAdmin();render();
+  alert(cloud==='jsonbin'?'Vinho publicado para toda a equipe. Peça um refresh nos outros aparelhos.':cloud==='github'?'Vinho publicado no GitHub. Em até 1 minuto a equipe vê.':cloud?'Vinho sincronizado.':'Vinho salvo só neste aparelho. Falta configurar o JSONBin no index.html.');
+}
+async function deleteWine(id){
+  if(!confirm('Excluir este vinho?'))return;
+  WINES=WINES.filter(w=>String(w.id)!==String(id));
+  saveLocal();
+  try{await persistWinesCloud()}catch(e){console.warn(e)}
+  populate();buildCats();renderAdmin();render();
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify({version:6,wines:WINES,categories:CUSTOM,catMeta:CATMETA,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='arp-carta-vinhos-v6-backup.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function switchView(v){
+  if(v==='catalog')closeAdmin();
+  else if(v==='finder')openFinder();
+  else if(v==='training')openTraining();
+}
+
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>switchView(b.dataset.view));
+$('adminNav').onclick=openAdmin;
+$('overlay').onclick=e=>{if(e.target.id==='overlay')closeSheet()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+$('search').oninput=e=>{query=e.target.value.trim();$('clearSearch').classList.toggle('hidden',!query);render()};
+$('clearSearch').onclick=()=>{$('search').value='';query='';$('clearSearch').classList.add('hidden');render()};
+['grapeFilter','countryFilter','styleFilter','priceFilter'].forEach(id=>$(id).onchange=render);
+$('favFilter').onclick=()=>{favOnly=!favOnly;$('favFilter').classList.toggle('active',favOnly);render()};
+
+loadLocal();
+populate();
+buildCats();
+render();
+restore();
+
+</script>
+</body>
+</html>
