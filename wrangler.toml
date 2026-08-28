@@ -1,0 +1,7 @@
+name = "arp-carta-vinhos-api"
+compatibility_date = "2026-08-26"
+
+[vars]
+# Defina no painel do Cloudflare Pages:
+# WINES_BIN_ID, USERS_BIN_ID
+# Secrets: JSONBIN_MASTER_KEY, SESSION_SECRET, ADMIN_USER, ADMIN_PASSWORD, COLAB_USER, COLAB_PASSWORD
